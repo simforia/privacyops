@@ -12,6 +12,7 @@ from simforia_ops_module import (
     trigger_inject_alert,
     export_log,
     generate_gpt_overlay
+)
 
 # Ensure session state is initialized
 if "simforia_log" not in st.session_state:
