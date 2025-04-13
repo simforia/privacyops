@@ -4,6 +4,7 @@ import datetime
 from ghost_gpt_module import run_ghost_gpt  # GPT module import
 from injector_module import run_instructor_injector
 from amazon_obfuscation_module import render_amazon_obfuscation_section
+from simforia_data_broker_warroom import run_broker_warroom
 
 st.set_page_config(page_title="Simforia PrivacyOps | Ghost Protocol", layout="wide")
 
@@ -36,12 +37,18 @@ if phase == "Phase 1 - Exposure Audit":
 
 elif phase == "Phase 2 - Broker Opt-Out":
     st.markdown("### 📤 Broker Opt-Out Tracker")
+
+    is_instructor = user_type == "Instructor"
+    run_broker_warroom(is_instructor)
+
     df = pd.DataFrame({
         'Broker': ['Spokeo', 'Whitepages', 'MyLife', 'BeenVerified'],
         'Opt-Out Submitted': [False]*4,
         'Confirmation Received': [False]*4,
         'Recheck Date': [""]*4
     })
+
+            })
     edited_df = st.data_editor(df, num_rows="dynamic", use_container_width=True)
     st.download_button("💾 Download Tracker as CSV", edited_df.to_csv(index=False), "privacy_tracker.csv", "text/csv")
 
