@@ -66,7 +66,7 @@ st.markdown("""
 
 st.markdown("---")
 st.markdown("🧠 [Access Ghost Protocol GPT](https://chatgpt.com/g/g-67fbb978fa4c8191b8a9c0c1cc13afca-simforia-intelligence-group-ghost-protocol)")
-)
+
 
 
     # ✅ Add this new option:
