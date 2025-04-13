@@ -44,12 +44,29 @@ with st.sidebar:
         "email": user_email
     }
 
-    st.header("🧠 User Profile")
-    user_type = st.selectbox("Select your role:", ["Civilian", "Journalist", "IC/LEO", "Whistleblower", "Field Op", "Instructor"])
-    st.date_input("Session Date", datetime.date.today())
-    st.markdown("Customize your erasure mission below:")
-    st.markdown("---")
-    st.markdown("🧠 [Access Ghost Protocol GPT](https://chatgpt.com/g/g-67fbb978fa4c8191b8a9c0c1cc13afca-simforia-intelligence-group-ghost-protocol)")
+st.header("🧠 User Profile")
+user_type = st.selectbox("Select your role:", ["Civilian", "Journalist", "IC/LEO", "Whistleblower", "Field Op", "Instructor"])
+st.date_input("Session Date", datetime.date.today())
+st.markdown("Customize your erasure mission below:")
+
+# 💬 Simforia GPT Conversation Starters (Civilian-Friendly)
+st.markdown("### 💬 Suggested Conversation Starters")
+st.markdown("""
+- How do I remove my personal data from the internet?  
+- Can you help me audit my online exposure risk?  
+- What’s the best way to shield my identity from tracking?  
+- How do I set up secure communication channels?  
+- Walk me through a phased digital cleanup plan.  
+- Show me how to create a compartmented identity.  
+- How can I detect if I’m being digitally surveilled?  
+- What tools reduce metadata leakage?  
+- Build a data broker opt-out checklist.  
+- Help me train others to do digital cleanup safely.  
+""")
+
+st.markdown("---")
+st.markdown("🧠 [Access Ghost Protocol GPT](https://chatgpt.com/g/g-67fbb978fa4c8191b8a9c0c1cc13afca-simforia-intelligence-group-ghost-protocol)")
+)
 
 
     # ✅ Add this new option:
