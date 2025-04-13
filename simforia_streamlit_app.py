@@ -70,7 +70,7 @@ with st.sidebar:
     st.markdown("🛡️ **Phase BLACK – Active Surveillance Countermeasures (ASC)**")
     phase_black_trigger = st.checkbox("🔥 Enter Phase BLACK")
     st.session_state["phase_black_active"] = phase_black_trigger
-            if advanced_mode:
+    if advanced_mode:
     phase = st.radio("Which phase are you working on?", [
         "Phase 0 – Threat Modeling & Persona Calibration",
         "Phase 1 – Exposure Audit",
