@@ -34,7 +34,12 @@ phase = st.radio("Which phase are you working on?", [
     "Phase 2 - Broker Opt-Out",
     "Phase 3 - Lockdown Protocols",
     "Phase 4 - Cover Identity",
-    "Phase 5 - Maintenance"])
+    "Phase 5 - Maintenance",
+    "Phase 6 - Deception & Noise Seeding",
+    "Phase 7 - Cross-Platform Identity Decoupling"
+])
+
+
 
 if phase == "Phase 1 - Exposure Audit":
     st.markdown("### 🔍 Exposure Audit Checklist")
@@ -109,6 +114,52 @@ elif phase == "Phase 5 - Maintenance":
         if st.checkbox(task):
             log_checkbox("Phase 5", task)
             generate_gpt_overlay("Maintenance", task, instructor=(user_type == "Instructor"))
+elif phase == "Phase 6 - Deception & Noise Seeding":
+    st.markdown("### 🕵️ Deception & Noise Seeding")
+
+    st.markdown("- **Seed false data into people search engines** (e.g., create fake LinkedIn profiles, alternate aliases).")
+    st.markdown("- **Join marketing platforms with decoy emails/names** to pollute databases.")
+    st.markdown("- **Use GPS spoofing apps** or spoofed check-ins to mislead location-based services.")
+    st.markdown("- **Engage in controlled deception**: Loyalty cards with burner info, fake newsletter signups, etc.")
+    st.markdown("- **Monitor noise profiles** with a privacy dashboard or use Optery/Kanary under multiple aliases.")
+
+    tactic = st.radio("Select deception vector:", ["Obfuscate", "Noise Seeding", "Both (Layered Deception)"], key="phase6_deception")
+
+    if tactic:
+        generate_gpt_overlay("Surveillance Economy", tactic, instructor=(user_type == "Instructor"))
+elif phase == "Phase 7 - Cross-Platform Identity Decoupling":
+    st.markdown("### 🧬 Cross-Platform Identity Decoupling")
+
+    st.markdown("- **Disentangle your accounts:** Use different aliases, emails, and profile images across services.")
+    st.markdown("- **Break metadata chains:** Vary your devices, browsers, and locations when accessing services.")
+    st.markdown("- **Segment usage patterns:** Divide your online behaviors into distinct compartments (e.g., financial, health, social).")
+    st.markdown("- **Use compartmentalized identities:** Each purpose (banking, work, social) should have a unique email, phone, IP trail, and name variant.")
+    st.markdown("- **Reset digital fingerprints:** Regularly purge cookies, browser caches, and rotate VPN exit nodes/IPs.")
+
+    tactic = st.radio(
+        "Which strategy do you want to apply?",
+        ["Metadata Decoupling", "Account Segmentation", "Full Identity Partitioning"],
+        key="phase7_decoupling"
+    )
+elif phase == "Phase 7 - Cross-Platform Identity Decoupling":
+    st.markdown("### 🧬 Cross-Platform Identity Decoupling")
+
+    st.markdown("- **Disentangle your accounts:** Use different aliases, emails, and profile images across services.")
+    st.markdown("- **Break metadata chains:** Vary your devices, browsers, and locations when accessing services.")
+    st.markdown("- **Segment usage patterns:** Divide your online behaviors into distinct compartments (e.g., financial, health, social).")
+    st.markdown("- **Use compartmentalized identities:** Each purpose (banking, work, social) should have a unique email, phone, IP trail, and name variant.")
+    st.markdown("- **Reset digital fingerprints:** Regularly purge cookies, browser caches, and rotate VPN exit nodes/IPs.")
+
+    tactic = st.radio(
+        "Which strategy do you want to apply?",
+        ["Metadata Decoupling", "Account Segmentation", "Full Identity Partitioning"],
+        key="phase7_decoupling"
+    )
+
+    if tactic:
+        generate_gpt_overlay("Cross-Platform Ecosystem", tactic, instructor=(user_type == "Instructor"))
+    if tactic:
+        generate_gpt_overlay("Cross-Platform Ecosystem", tactic, instructor=(user_type == "Instructor"))
 
 run_ghost_gpt(phase)
 
