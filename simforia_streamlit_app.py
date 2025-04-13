@@ -3,6 +3,7 @@ import pandas as pd
 import datetime
 from ghost_gpt_module import run_ghost_gpt  # GPT module import
 from injector_module import run_instructor_injector
+from amazon_obfuscation_module import render_amazon_obfuscation_section
 
 st.set_page_config(page_title="Simforia PrivacyOps | Ghost Protocol", layout="wide")
 
@@ -51,6 +52,10 @@ elif phase == "Phase 3 - Lockdown Protocols":
     st.checkbox("Freeze credit with all bureaus")
     st.checkbox("Install Mullvad VPN")
     st.checkbox("Harden Firefox with uBlock + PrivacyBadger")
+    with st.expander("🛒 Amazon Obfuscation Playbook (Click to Expand)", expanded=True):
+    render_amazon_obfuscation_section()
+
+
 
 elif phase == "Phase 4 - Cover Identity":
     st.markdown("### 🪪 Cover Identity Generator")
