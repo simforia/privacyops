@@ -41,7 +41,7 @@ with st.sidebar:
     "phone": user_phone,
     "email": user_email
     }
-        st.header("🧠 User Profile")
+    st.header("🧠 User Profile")
     user_type = st.selectbox("Select your role:", ["Civilian", "Journalist", "IC/LEO", "Whistleblower", "Field Op", "Instructor"])
     st.date_input("Session Date", datetime.date.today())
     st.markdown("Customize your erasure mission below:")
