@@ -87,7 +87,11 @@ else:
         "Phase 9 – Digital Footprint Intelligence (DFI) Feedback Loops"
     ])
 
+if phase == "Phase 1 – Exposure Audit":
+    ...
 elif phase == "Phase 0 – Threat Modeling & Persona Calibration":
+    ...
+
     st.markdown("### 🧠 Phase 0 – Threat Modeling & Persona Calibration")
     st.radio("Adversary Type", ["Script Kiddie", "Criminal Org", "Corporate", "Nation-State"], key="adversary_type")
     st.radio("Objective", ["Obscurity", "Anonymity", "Untraceability"], key="op_objective")
