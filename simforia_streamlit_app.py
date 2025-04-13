@@ -11,6 +11,10 @@ from simforia_ops_module import (
     trigger_inject_alert,
     export_log
 )
+# Initialize session logging
+if "simforia_log" not in st.session_state:
+    st.session_state.simforia_log = []
+
 
 st.set_page_config(page_title="Simforia PrivacyOps | Ghost Protocol", layout="wide")
 
