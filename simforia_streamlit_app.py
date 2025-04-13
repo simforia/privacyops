@@ -48,6 +48,10 @@ st.header("🧠 User Profile")
 user_type = st.selectbox("Select your role:", ["Civilian", "Journalist", "IC/LEO", "Whistleblower", "Field Op", "Instructor"])
 st.date_input("Session Date", datetime.date.today())
 st.markdown("Customize your erasure mission below:")
+# ✅ Add this new option:
+    advanced_mode = st.checkbox("🔬 Enable Advanced Phases", value=False)
+    instructor_mode = st.checkbox("🎓 Instructor Mode", value=False)
+    st.session_state["is_instructor"] = instructor_mode
 
 # 💬 Simforia GPT Conversation Starters (Civilian-Friendly)
 st.markdown("### 💬 Suggested Conversation Starters")
@@ -66,12 +70,7 @@ st.markdown("""
 
 st.markdown("---")
 st.markdown("🧠 [Access Ghost Protocol GPT](https://chatgpt.com/g/g-67fbb978fa4c8191b8a9c0c1cc13afca-simforia-intelligence-group-ghost-protocol)")
-
-
-    # ✅ Add this new option:
-    advanced_mode = st.checkbox("🔬 Enable Advanced Phases", value=False)
-    instructor_mode = st.checkbox("🎓 Instructor Mode", value=False)
-    st.session_state["is_instructor"] = instructor_mode
+    
 
 st.markdown("---")
 if st.session_state.get("is_instructor") or advanced_mode:
