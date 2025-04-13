@@ -70,25 +70,36 @@ with st.sidebar:
         st.markdown("🛡️ **Phase BLACK – Active Surveillance Countermeasures (ASC)**")
         phase_black_trigger = st.checkbox("🔥 Enter Phase BLACK")
         st.session_state["phase_black_active"] = phase_black_trigger
-    if advanced_mode:
-        phase = st.radio("Which phase are you working on?", [
-            "Phase 0 – Threat Modeling & Persona Calibration",
-            "Phase 1 – Exposure Audit",
-            "Phase 1.5 – Infrastructure & Access Hygiene",
-            "Phase 2 – Broker Opt-Out",
-            "Phase 2.5 – Legal & Financial Cloaking",
-            "Phase 3 – Lockdown Protocols",
-            "Phase 4 – Cover Identity",
-            "Phase 4.5 – Synthetic Ecosystem & Decoys",
-            "Phase 5 – Maintenance",
-            "Phase 5.5 – Burn Network Protocol",
-            "Phase 6 – Deception & Noise Seeding",
-            "Phase 7 – Cross-Platform Identity Decoupling",
-            "Phase 8 – Metadata & Behavioral Cloaking",
-            "Phase 9 – Digital Footprint Intelligence (DFI) Feedback Loops",
-            "Phase 9.5 – Behavioral Feedback AI Loop",
-    "Optional Phase – DNA & Biometric Spoof Prevention"
-])
+# ✅ Add this new option:
+advanced_mode = st.checkbox("🔬 Enable Advanced Phases", value=False)
+instructor_mode = st.checkbox("🎓 Instructor Mode", value=False)
+st.session_state["is_instructor"] = instructor_mode
+st.markdown("---")
+
+if st.session_state.get("is_instructor") or advanced_mode:
+    st.markdown("🛡️ **Phase BLACK – Active Surveillance Countermeasures (ASC)**")
+    phase_black_trigger = st.checkbox("🔥 Enter Phase BLACK")
+    st.session_state["phase_black_active"] = phase_black_trigger
+
+if advanced_mode:
+    phase = st.radio("Which phase are you working on?", [
+        "Phase 0 – Threat Modeling & Persona Calibration",
+        "Phase 1 – Exposure Audit",
+        "Phase 1.5 – Infrastructure & Access Hygiene",
+        "Phase 2 – Broker Opt-Out",
+        "Phase 2.5 – Legal & Financial Cloaking",
+        "Phase 3 – Lockdown Protocols",
+        "Phase 4 – Cover Identity",
+        "Phase 4.5 – Synthetic Ecosystem & Decoys",
+        "Phase 5 – Maintenance",
+        "Phase 5.5 – Burn Network Protocol",
+        "Phase 6 – Deception & Noise Seeding",
+        "Phase 7 – Cross-Platform Identity Decoupling",
+        "Phase 8 – Metadata & Behavioral Cloaking",
+        "Phase 9 – Digital Footprint Intelligence (DFI) Feedback Loops",
+        "Phase 9.5 – Behavioral Feedback AI Loop",
+        "Optional Phase – DNA & Biometric Spoof Prevention"
+    ])
 else:
     phase = st.radio("Which phase are you working on?", [
         "Phase 1 – Exposure Audit",
@@ -101,6 +112,7 @@ else:
         "Phase 8 – Metadata & Behavioral Cloaking",
         "Phase 9 – Digital Footprint Intelligence (DFI) Feedback Loops"
     ])
+    
 
 
 if phase == "Phase 1 – Exposure Audit":
