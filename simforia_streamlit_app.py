@@ -32,7 +32,7 @@ with st.sidebar:
     user_zip = st.text_input("ZIP/Postal Code", placeholder="e.g., 28801")
     user_phone = st.text_input("Phone Number", placeholder="e.g., 555-123-4567")
     user_email = st.text_input("Email Address", placeholder="e.g., jordan@example.com")
-        st.session_state["user_identity"] = {
+    st.session_state["user_identity"] = {
     "name": user_name,
     "address": user_address,
     "city": user_city,
@@ -65,7 +65,7 @@ with st.sidebar:
     advanced_mode = st.checkbox("🔬 Enable Advanced Phases", value=False)
     instructor_mode = st.checkbox("🎓 Instructor Mode", value=False)
     st.session_state["is_instructor"] = instructor_mode
-        st.markdown("---")
+    st.markdown("---")
     if st.session_state.get("is_instructor") or advanced_mode:
     st.markdown("🛡️ **Phase BLACK – Active Surveillance Countermeasures (ASC)**")
     phase_black_trigger = st.checkbox("🔥 Enter Phase BLACK")
