@@ -1,6 +1,8 @@
-import openai
+from openai import OpenAI
 import streamlit as st
 import datetime
+
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 def run_ghost_gpt(phase):
     st.divider()
@@ -15,7 +17,7 @@ def run_ghost_gpt(phase):
 
         with st.spinner("Ghost Protocol is analyzing..."):
             try:
-                response = openai.ChatCompletion.create(
+                response = client.chat.completions.create(
                     model="gpt-4",
                     messages=[
                         {
