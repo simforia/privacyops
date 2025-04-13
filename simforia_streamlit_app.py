@@ -24,6 +24,25 @@ st.subheader("Ghost Protocol - Digital Disappearance Assistant")
 st.markdown("Erase the digital you. Control exposure, lock down your footprint, and track your privacy operations.")
 
 with st.sidebar:
+    st.header("🧠 Configure Your Identity Profile")
+
+    user_name = st.text_input("Full Name", placeholder="e.g., Jordan Reeves")
+    user_address = st.text_input("Street Address", placeholder="123 Main St, Apt 4B")
+    user_city = st.text_input("City", placeholder="e.g., Asheville")
+    user_state = st.text_input("State/Province", placeholder="e.g., NC")
+    user_zip = st.text_input("ZIP/Postal Code", placeholder="e.g., 28801")
+    user_phone = st.text_input("Phone Number", placeholder="e.g., 555-123-4567")
+    user_email = st.text_input("Email Address", placeholder="e.g., jordan@example.com")
+
+    st.session_state["user_identity"] = {
+        "name": user_name,
+        "address": user_address,
+        "city": user_city,
+        "state": user_state,
+        "zip": user_zip,
+        "phone": user_phone,
+        "email": user_email
+    }
     st.header("🧠 User Profile")
     user_type = st.selectbox("Select your role:", ["Civilian", "Journalist", "IC/LEO", "Whistleblower", "Field Op", "Instructor"])
     st.date_input("Session Date", datetime.date.today())
