@@ -37,6 +37,8 @@ phase = st.radio("Which phase are you working on?", [
     "Phase 5 - Maintenance",
     "Phase 6 - Deception & Noise Seeding",
     "Phase 7 - Cross-Platform Identity Decoupling"
+    "Phase 8 - Metadata Cloaking"
+    "Phase 9 - Digital Footprint Intelligence (DFI) Feedback Loops"
 ])
 
 
@@ -155,9 +157,45 @@ elif phase == "Phase 7 - Cross-Platform Identity Decoupling":
         ["Metadata Decoupling", "Account Segmentation", "Full Identity Partitioning"],
         key="phase7_decoupling"
     )
+# --- Phase 8 ---
+elif phase == "Phase 8 - Metadata & Behavioral Cloaking":
+    st.markdown("### 🕵️ Phase 8 – Metadata & Behavioral Cloaking")
+    st.markdown("This phase focuses on reducing metadata exposure and behavior fingerprinting.")
 
-    if tactic:
-        generate_gpt_overlay("Cross-Platform Ecosystem", tactic, instructor=(user_type == "Instructor"))
+    phase8_tasks = [
+        "Use Firefox containers for identity segmentation",
+        "Rotate user agents with extensions like Chameleon",
+        "Deploy MAC address randomization before connecting",
+        "Use hardened OS environments (e.g., Tails, Qubes)",
+        "Disable app telemetry, voice input, and activity tracking",
+        "Spoof geolocation using browser extensions",
+        "Use separate VMs or browser profiles per compartment"
+    ]
+
+    for task in phase8_tasks:
+        if st.checkbox(task, key=task):
+            log_checkbox("Phase 8", task)
+            generate_gpt_overlay("Metadata Cloaking", task, instructor=(user_type == "Instructor"))
+
+# --- Phase 9 ---
+elif phase == "Phase 9 - Digital Footprint Intelligence (DFI) Feedback Loops":
+    st.markdown("### 📊 Phase 9 – DFI Feedback Loops")
+    st.markdown("This phase emphasizes measuring your footprint and detecting reemerging exposure.")
+
+    phase9_tasks = [
+        "Re-scan people search engines monthly",
+        "Monitor for re-listed data using Kanary/Optery",
+        "Set Google Alerts for full name, phone, and address",
+        "Check if leaked emails are reused or scraped",
+        "Review browser/device fingerprint results weekly",
+        "Audit metadata leakage from installed extensions"
+    ]
+
+    for task in phase9_tasks:
+        if st.checkbox(task, key=task):
+            log_checkbox("Phase 9", task)
+            generate_gpt_overlay("Digital Footprint Monitoring", task, instructor=(user_type == "Instructor"))
+   
     if tactic:
         generate_gpt_overlay("Cross-Platform Ecosystem", tactic, instructor=(user_type == "Instructor"))
 
