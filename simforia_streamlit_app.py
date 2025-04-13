@@ -29,14 +29,7 @@ def generate_gpt_overlay(broker_name, tactic, instructor=False):
         response = client.chat.completions.create(
             model="gpt-4-1106-preview",
             messages=[
-                {"role": "system", "content": system},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.6,
-            max_tokens=600
-        )
-        st.markdown(response.choices[0].message.content)
-
+               
 def render_broker_overlay(broker, description, opt_out_url, instructor=False):
     st.markdown(f"### 🛰 {broker}")
     st.markdown(f"**Profile:** {description}")
@@ -57,7 +50,6 @@ def render_broker_overlay(broker, description, opt_out_url, instructor=False):
             max_tokens=600
         )
         st.markdown(response.choices[0].message.content)
-
 
 
 st.subheader("Ghost Protocol - Digital Disappearance Assistant")
@@ -98,8 +90,7 @@ elif phase == "Phase 2 - Broker Opt-Out":
         'Confirmation Received': [False]*4,
         'Recheck Date': [""]*4
     })
-
-            })
+           
     edited_df = st.data_editor(df, num_rows="dynamic", use_container_width=True)
     st.download_button("💾 Download Tracker as CSV", edited_df.to_csv(index=False), "privacy_tracker.csv", "text/csv")
 
