@@ -52,7 +52,7 @@ with st.sidebar:
     # ✅ Add this new option:
     advanced_mode = st.checkbox("🔬 Enable Advanced Phases", value=False)
     instructor_mode = st.checkbox("🎓 Instructor Mode", value=False)
-st.session_state["is_instructor"] = instructor_mode
+    st.session_state["is_instructor"] = instructor_mode
 
 
 if advanced_mode:
@@ -87,6 +87,90 @@ else:
         "Phase 9 – Digital Footprint Intelligence (DFI) Feedback Loops"
     ])
 
+elif phase == "Phase 0 – Threat Modeling & Persona Calibration":
+    st.markdown("### 🧠 Phase 0 – Threat Modeling & Persona Calibration")
+    st.radio("Adversary Type", ["Script Kiddie", "Criminal Org", "Corporate", "Nation-State"], key="adversary_type")
+    st.radio("Objective", ["Obscurity", "Anonymity", "Untraceability"], key="op_objective")
+    st.radio("Persona Model", ["Compartmentalized", "Fused", "Rotational"], key="persona_model")
+
+elif phase == "Phase 1.5 – Infrastructure & Access Hygiene":
+    st.markdown("### 🧱 Phase 1.5 – Infrastructure & Access Hygiene")
+    tasks = [
+        "Use custom domain aliases with Proton/Skiff",
+        "De-Google phone (GrapheneOS)",
+        "Use router-based VPNs or Tor bridges",
+        "MAC spoofing and telemetry hardening",
+        "Randomize login timing and browser patterns"
+    ]
+    for task in tasks:
+        if st.checkbox(task, key=f"p15_{task}"):
+            log_checkbox("Phase 1.5", task)
+            generate_gpt_overlay("Infrastructure Hygiene", task, instructor=st.session_state["is_instructor"])
+
+elif phase == "Phase 2.5 – Legal & Financial Cloaking":
+    st.markdown("### 🛠 Phase 2.5 – Legal & Financial Cloaking")
+    tasks = [
+        "Freeze credit reports (Equifax/TransUnion/Experian)",
+        "Opt-out of LexisNexis, CoreLogic, SageStream",
+        "Suppress voter and DMV registration leaks",
+        "Register LLC or trust to anonymize infrastructure",
+        "File FOIA requests for public record removal"
+    ]
+    for task in tasks:
+        if st.checkbox(task, key=f"p25_{task}"):
+            log_checkbox("Phase 2.5", task)
+            generate_gpt_overlay("Legal Cloaking", task, instructor=st.session_state["is_instructor"])
+
+elif phase == "Phase 4.5 – Synthetic Ecosystem & Decoys":
+    st.markdown("### 🕸 Phase 4.5 – Synthetic Ecosystem & Decoys")
+    tasks = [
+        "Create AI-generated decoy profiles",
+        "Seed false data across forums and blogs",
+        "Construct mirrored but altered social graphs",
+        "Vary behavioral patterns across synthetic identities"
+    ]
+    for task in tasks:
+        if st.checkbox(task, key=f"p45_{task}"):
+            log_checkbox("Phase 4.5", task)
+            generate_gpt_overlay("Synthetic Identity", task, instructor=st.session_state["is_instructor"])
+
+elif phase == "Phase 5.5 – Burn Network Protocol":
+    st.markdown("### 📉 Phase 5.5 – Burn Network Protocol")
+    st.warning("⚠️ Initiating this phase means a full identity reset and wiping prior infrastructure.")
+    if st.button("💥 Initiate Burn Protocol"):
+        st.session_state["simforia_log"] = []
+        st.success("All logs wiped. Begin rebuilding a clean digital identity.")
+
+elif phase == "Phase 9.5 – Behavioral Feedback AI Loop":
+    st.markdown("### 🔬 Phase 9.5 – Behavioral Feedback AI Loop")
+    user_input = st.text_area("Describe your recent activities or privacy concern:")
+    if st.button("Run Behavioral Threat Model"):
+        from openai import OpenAI
+        client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+        response = client.chat.completions.create(
+            model="gpt-4-1106-preview",
+            messages=[
+                {"role": "system", "content": "You are Ghost Protocol. Analyze the user's digital behavior and simulate how an adversary might track or correlate their metadata."},
+                {"role": "user", "content": user_input}
+            ],
+            temperature=0.7,
+            max_tokens=700
+        )
+        st.markdown(response.choices[0].message.content)
+
+elif phase == "Optional Phase – DNA & Biometric Spoof Prevention":
+    st.markdown("### 🧬 DNA & Biometric Spoof Prevention")
+    tasks = [
+        "Disassociate biometrics from login systems",
+        "Check if facial photos are indexed by AI datasets",
+        "Avoid genealogy platforms that link family trees",
+        "Obfuscate facial data using distortion overlays"
+    ]
+    for task in tasks:
+        if st.checkbox(task, key=f"bio_{task}"):
+            log_checkbox("Biometrics", task)
+            generate_gpt_overlay("Biometric Spoofing", task, instructor=st.session_state["is_instructor"])
+
 
 if phase == "Phase 1 - Exposure Audit":
     st.markdown("### 🔍 Exposure Audit Checklist")
@@ -99,7 +183,7 @@ if phase == "Phase 1 - Exposure Audit":
     for task in tasks:
         if st.checkbox(task):
             log_checkbox("Phase 1", task)
-            generate_gpt_overlay("Exposure Audit", task, instructor=(user_type == "Instructor"))
+            generate_gpt_overlay("Exposure Audit", task, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 2 - Broker Opt-Out":
     st.markdown("### 📤 Broker Opt-Out Tracker")
@@ -135,7 +219,7 @@ elif phase == "Phase 3 - Lockdown Protocols":
     for task in tasks:
         if st.checkbox(task):
             log_checkbox("Phase 3", task)
-            generate_gpt_overlay("Lockdown Protocols", task, instructor=(user_type == "Instructor"))
+            generate_gpt_overlay("Lockdown Protocols", task, instructor=st.session_state["is_instructor"])
 
     with st.expander("🛒 Amazon Obfuscation Playbook (Click to Expand)", expanded=True):
         render_amazon_obfuscation_section()
@@ -147,7 +231,7 @@ elif phase == "Phase 4 - Cover Identity":
     ]
     for field in identity_fields:
         st.text_input(field)
-        generate_gpt_overlay("Cover Identity", field, instructor=(user_type == "Instructor"))
+        generate_gpt_overlay("Cover Identity", field, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 5 - Maintenance":
     st.markdown("### 🔁 Ongoing Maintenance")
@@ -160,7 +244,7 @@ elif phase == "Phase 5 - Maintenance":
     for task in tasks:
         if st.checkbox(task):
             log_checkbox("Phase 5", task)
-            generate_gpt_overlay("Maintenance", task, instructor=(user_type == "Instructor"))
+            generate_gpt_overlay("Maintenance", task, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 6 - Deception & Noise Seeding":
     st.markdown("### 🕵️ Deception & Noise Seeding")
@@ -173,7 +257,7 @@ elif phase == "Phase 6 - Deception & Noise Seeding":
     for task in deception_tactics:
         if st.checkbox(task):
             log_checkbox("Phase 6", task)
-            generate_gpt_overlay("Surveillance Economy", task, instructor=(user_type == "Instructor"))
+            generate_gpt_overlay("Surveillance Economy", task, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 7 - Cross-Platform Identity Decoupling":
     st.markdown("### 🧬 Cross-Platform Identity Decoupling")
@@ -184,7 +268,7 @@ elif phase == "Phase 7 - Cross-Platform Identity Decoupling":
     )
     if tactic:
         log_checkbox("Phase 7", tactic)
-        generate_gpt_overlay("Cross-Platform Ecosystem", tactic, instructor=(user_type == "Instructor"))
+        generate_gpt_overlay("Cross-Platform Ecosystem", tactic, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 8 - Metadata & Behavioral Cloaking":
     st.markdown("### 🕵️ Phase 8 – Metadata & Behavioral Cloaking")
@@ -200,7 +284,7 @@ elif phase == "Phase 8 - Metadata & Behavioral Cloaking":
     for task in tasks:
         if st.checkbox(task, key=f"p8_{task}"):
             log_checkbox("Phase 8", task)
-            generate_gpt_overlay("Metadata Cloaking", task, instructor=(user_type == "Instructor"))
+            generate_gpt_overlay("Metadata Cloaking", task, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 9 - Digital Footprint Intelligence (DFI) Feedback Loops":
     st.markdown("### 📊 Phase 9 – DFI Feedback Loops")
@@ -215,7 +299,7 @@ elif phase == "Phase 9 - Digital Footprint Intelligence (DFI) Feedback Loops":
     for task in tasks:
         if st.checkbox(task, key=f"p9_{task}"):
             log_checkbox("Phase 9", task)
-            generate_gpt_overlay("Digital Footprint Monitoring", task, instructor=(user_type == "Instructor"))
+            generate_gpt_overlay("Digital Footprint Monitoring", task, instructor=st.session_state["is_instructor"])
 
 run_ghost_gpt(phase)
 
