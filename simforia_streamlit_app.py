@@ -32,7 +32,7 @@ with st.sidebar:
     user_zip = st.text_input("ZIP/Postal Code", placeholder="e.g., 28801")
     user_phone = st.text_input("Phone Number", placeholder="e.g., 555-123-4567")
     user_email = st.text_input("Email Address", placeholder="e.g., jordan@example.com")
-        st.session_state["user_identity"] = {
+    st.session_state["user_identity"] = {
     "name": user_name,
     "address": user_address,
     "city": user_city,
@@ -41,7 +41,7 @@ with st.sidebar:
     "phone": user_phone,
     "email": user_email
     }
-        st.header("🧠 User Profile")
+    st.header("🧠 User Profile")
     user_type = st.selectbox("Select your role:", ["Civilian", "Journalist", "IC/LEO", "Whistleblower", "Field Op", "Instructor"])
     st.date_input("Session Date", datetime.date.today())
     st.markdown("Customize your erasure mission below:")
@@ -65,12 +65,12 @@ with st.sidebar:
     advanced_mode = st.checkbox("🔬 Enable Advanced Phases", value=False)
     instructor_mode = st.checkbox("🎓 Instructor Mode", value=False)
     st.session_state["is_instructor"] = instructor_mode
-        st.markdown("---")
+    st.markdown("---")
     if st.session_state.get("is_instructor") or advanced_mode:
     st.markdown("🛡️ **Phase BLACK – Active Surveillance Countermeasures (ASC)**")
     phase_black_trigger = st.checkbox("🔥 Enter Phase BLACK")
     st.session_state["phase_black_active"] = phase_black_trigger
-            if advanced_mode:
+    if advanced_mode:
     phase = st.radio("Which phase are you working on?", [
         "Phase 0 – Threat Modeling & Persona Calibration",
         "Phase 1 – Exposure Audit",
