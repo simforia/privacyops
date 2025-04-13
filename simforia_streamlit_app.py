@@ -28,12 +28,16 @@ def render_broker_overlay(broker, description, opt_out_url, instructor=False):
     )
 
 def generate_gpt_overlay(broker_name, tactic, instructor=False):
-        system = (
+    system = (
         "You are Ghost Protocol, a tactical privacy advisor and red cell instructor."
         if instructor else
         "You are Ghost Protocol, a privacy AI helping users delete, remove, or obfuscate their data from surveillance systems."
     )
-    prompt = f"How to {tactic.lower()} your data from {broker_name}. Give step-by-step instructions and note any risks, verification needs, or common pitfalls."
+
+    prompt = (
+        f"How to {tactic.lower()} your data from {broker_name}. "
+        "Give step-by-step instructions and note any risks, verification needs, or common pitfalls."
+    )
 
     with st.expander(f"🧠 {tactic.title()} Guidance from Ghost Protocol"):
         response = client.chat.completions.create(
@@ -45,7 +49,8 @@ def generate_gpt_overlay(broker_name, tactic, instructor=False):
             temperature=0.6,
             max_tokens=600
         )
-        st.markdown(response.choices[0].message.content)  # ✅ Last line of the function
+        st.markdown(response.choices[0].message.content)
+ # ✅ Last line of the function
 
 
 st.subheader("Ghost Protocol - Digital Disappearance Assistant")
