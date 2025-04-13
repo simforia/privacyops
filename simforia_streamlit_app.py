@@ -8,7 +8,58 @@ from simforia_data_broker_warroom import run_broker_warroom
 
 st.set_page_config(page_title="Simforia PrivacyOps | Ghost Protocol", layout="wide")
 
-st.title("🛡️ Simforia PrivacyOps Suite")
+# ----------------------------------------
+# Tactical GPT Overlay Functions (Paste Here)
+# ----------------------------------------
+
+from openai import OpenAI
+
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
+def generate_gpt_overlay(broker_name, tactic, instructor=False):
+    system = (
+        "You are Ghost Protocol, a tactical privacy advisor and red cell instructor."
+        if instructor else
+        "You are Ghost Protocol, a privacy AI helping users delete, remove, or obfuscate their data from surveillance systems."
+    )
+
+    prompt = f"How to {tactic.lower()} your data from {broker_name}. Give step-by-step instructions and note any risks, verification needs, or common pitfalls."
+
+    with st.expander(f"🧠 {tactic.title()} Guidance from Ghost Protocol"):
+        response = client.chat.completions.create(
+            model="gpt-4-1106-preview",
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.6,
+            max_tokens=600
+        )
+        st.markdown(response.choices[0].message.content)
+
+def render_broker_overlay(broker, description, opt_out_url, instructor=False):
+    st.markdown(f"### 🛰 {broker}")
+    st.markdown(f"**Profile:** {description}")
+    st.markdown(f"[🔗 Opt-Out Link]({opt_out_url})")
+
+    tactic = st.radio(
+        f"What do you want to do with your data on **{broker}**?",
+        ["Delete/Remove", "Obfuscate", "Both (Layered Attack)"],
+        key=broker
+    )
+
+    generate_gpt_overlay(broker, tactic, instructor)
+
+                {"role": "system", "content": system},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.6,
+            max_tokens=600
+        )
+        st.markdown(response.choices[0].message.content)
+
+
+
 st.subheader("Ghost Protocol - Digital Disappearance Assistant")
 
 st.markdown("Erase the digital you. Control exposure, lock down your footprint, and track your privacy operations.")
