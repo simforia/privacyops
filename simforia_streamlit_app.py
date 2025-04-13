@@ -59,7 +59,7 @@ with st.sidebar:
     - Build a data broker opt-out checklist.  
     - Help me train others to do digital cleanup safely.  
     """)
-        st.markdown("---")
+    st.markdown("---")
     st.markdown("🧠 [Access Ghost Protocol GPT](https://chatgpt.com/g/g-67fbb978fa4c8191b8a9c0c1cc13afca-simforia-intelligence-group-ghost-protocol)")
             # ✅ Add this new option:
     advanced_mode = st.checkbox("🔬 Enable Advanced Phases", value=False)
