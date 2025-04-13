@@ -12,7 +12,6 @@ from simforia_ops_module import (
     trigger_inject_alert,
     export_log,
     generate_gpt_overlay
-)
 
 # Ensure session state is initialized
 if "simforia_log" not in st.session_state:
@@ -66,7 +65,6 @@ st.markdown("""
 
 st.markdown("---")
 st.markdown("🧠 [Access Ghost Protocol GPT](https://chatgpt.com/g/g-67fbb978fa4c8191b8a9c0c1cc13afca-simforia-intelligence-group-ghost-protocol)")
-
 
 
     # ✅ Add this new option:
@@ -186,7 +184,6 @@ elif phase == "Phase 9.5 – Behavioral Feedback AI Loop":
             ],
             temperature=0.7,
             max_tokens=700
-        )
         st.markdown(response.choices[0].message.content)
 
 elif phase == "Optional Phase – DNA & Biometric Spoof Prevention":
@@ -225,7 +222,6 @@ elif phase == "Phase 2 - Broker Opt-Out":
         description="Aggregates social media and public records data.",
         opt_out_url="https://www.spokeo.com/optout",
         instructor=is_instructor
-    )
 
     run_broker_warroom(is_instructor)
 
@@ -296,7 +292,6 @@ elif phase == "Phase 7 - Cross-Platform Identity Decoupling":
         "Select your decoupling strategy:",
         ["Metadata Decoupling", "Account Segmentation", "Full Identity Partitioning"],
         key="phase7_strategy"
-    )
     if tactic:
         log_checkbox("Phase 7", tactic)
         generate_gpt_overlay("Cross-Platform Ecosystem", tactic, instructor=st.session_state["is_instructor"])
