@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import datetime
+
 from ghost_gpt_module import run_ghost_gpt
 from injector_module import run_instructor_injector
 from amazon_obfuscation_module import render_amazon_obfuscation_section
@@ -13,6 +14,7 @@ from simforia_ops_module import (
     generate_gpt_overlay
 )
 
+# Ensure session state is initialized
 if "simforia_log" not in st.session_state:
     st.session_state.simforia_log = []
 
@@ -27,8 +29,6 @@ with st.sidebar:
     st.date_input("Session Date", datetime.date.today())
     st.markdown("Customize your erasure mission below:")
 
-st.header("🗂️ Phase Selection")
-
 phase = st.radio("Which phase are you working on?", [
     "Phase 1 - Exposure Audit",
     "Phase 2 - Broker Opt-Out",
@@ -37,7 +37,7 @@ phase = st.radio("Which phase are you working on?", [
     "Phase 5 - Maintenance",
     "Phase 6 - Deception & Noise Seeding",
     "Phase 7 - Cross-Platform Identity Decoupling",
-    "Phase 8 - Metadata Cloaking",
+    "Phase 8 - Metadata & Behavioral Cloaking",
     "Phase 9 - Digital Footprint Intelligence (DFI) Feedback Loops"
 ])
 
@@ -114,53 +114,34 @@ elif phase == "Phase 5 - Maintenance":
         if st.checkbox(task):
             log_checkbox("Phase 5", task)
             generate_gpt_overlay("Maintenance", task, instructor=(user_type == "Instructor"))
+
 elif phase == "Phase 6 - Deception & Noise Seeding":
     st.markdown("### 🕵️ Deception & Noise Seeding")
+    deception_tactics = [
+        "Create noise in people search engines",
+        "Seed false job profiles on resume sites",
+        "Generate misleading purchase patterns",
+        "Use honeypot accounts and controlled leaks"
+    ]
+    for task in deception_tactics:
+        if st.checkbox(task):
+            log_checkbox("Phase 6", task)
+            generate_gpt_overlay("Surveillance Economy", task, instructor=(user_type == "Instructor"))
 
-    st.markdown("- **Seed false data into people search engines** (e.g., create fake LinkedIn profiles, alternate aliases).")
-    st.markdown("- **Join marketing platforms with decoy emails/names** to pollute databases.")
-    st.markdown("- **Use GPS spoofing apps** or spoofed check-ins to mislead location-based services.")
-    st.markdown("- **Engage in controlled deception**: Loyalty cards with burner info, fake newsletter signups, etc.")
-    st.markdown("- **Monitor noise profiles** with a privacy dashboard or use Optery/Kanary under multiple aliases.")
-
-    tactic = st.radio("Select deception vector:", ["Obfuscate", "Noise Seeding", "Both (Layered Deception)"], key="phase6_deception")
-
+elif phase == "Phase 7 - Cross-Platform Identity Decoupling":
+    st.markdown("### 🧬 Cross-Platform Identity Decoupling")
+    tactic = st.radio(
+        "Select your decoupling strategy:",
+        ["Metadata Decoupling", "Account Segmentation", "Full Identity Partitioning"],
+        key="phase7_strategy"
+    )
     if tactic:
-        generate_gpt_overlay("Surveillance Economy", tactic, instructor=(user_type == "Instructor"))
-elif phase == "Phase 7 - Cross-Platform Identity Decoupling":
-    st.markdown("### 🧬 Cross-Platform Identity Decoupling")
+        log_checkbox("Phase 7", tactic)
+        generate_gpt_overlay("Cross-Platform Ecosystem", tactic, instructor=(user_type == "Instructor"))
 
-    st.markdown("- **Disentangle your accounts:** Use different aliases, emails, and profile images across services.")
-    st.markdown("- **Break metadata chains:** Vary your devices, browsers, and locations when accessing services.")
-    st.markdown("- **Segment usage patterns:** Divide your online behaviors into distinct compartments (e.g., financial, health, social).")
-    st.markdown("- **Use compartmentalized identities:** Each purpose (banking, work, social) should have a unique email, phone, IP trail, and name variant.")
-    st.markdown("- **Reset digital fingerprints:** Regularly purge cookies, browser caches, and rotate VPN exit nodes/IPs.")
-
-    tactic = st.radio(
-        "Which strategy do you want to apply?",
-        ["Metadata Decoupling", "Account Segmentation", "Full Identity Partitioning"],
-        key="phase7_decoupling"
-    )
-elif phase == "Phase 7 - Cross-Platform Identity Decoupling":
-    st.markdown("### 🧬 Cross-Platform Identity Decoupling")
-
-    st.markdown("- **Disentangle your accounts:** Use different aliases, emails, and profile images across services.")
-    st.markdown("- **Break metadata chains:** Vary your devices, browsers, and locations when accessing services.")
-    st.markdown("- **Segment usage patterns:** Divide your online behaviors into distinct compartments (e.g., financial, health, social).")
-    st.markdown("- **Use compartmentalized identities:** Each purpose (banking, work, social) should have a unique email, phone, IP trail, and name variant.")
-    st.markdown("- **Reset digital fingerprints:** Regularly purge cookies, browser caches, and rotate VPN exit nodes/IPs.")
-
-    tactic = st.radio(
-        "Which strategy do you want to apply?",
-        ["Metadata Decoupling", "Account Segmentation", "Full Identity Partitioning"],
-        key="phase7_decoupling"
-    )
-# --- Phase 8 ---
 elif phase == "Phase 8 - Metadata & Behavioral Cloaking":
     st.markdown("### 🕵️ Phase 8 – Metadata & Behavioral Cloaking")
-    st.markdown("This phase focuses on reducing metadata exposure and behavior fingerprinting.")
-
-    phase8_tasks = [
+    tasks = [
         "Use Firefox containers for identity segmentation",
         "Rotate user agents with extensions like Chameleon",
         "Deploy MAC address randomization before connecting",
@@ -169,18 +150,14 @@ elif phase == "Phase 8 - Metadata & Behavioral Cloaking":
         "Spoof geolocation using browser extensions",
         "Use separate VMs or browser profiles per compartment"
     ]
-
-    for task in phase8_tasks:
-        if st.checkbox(task, key=task):
+    for task in tasks:
+        if st.checkbox(task, key=f"p8_{task}"):
             log_checkbox("Phase 8", task)
             generate_gpt_overlay("Metadata Cloaking", task, instructor=(user_type == "Instructor"))
 
-# --- Phase 9 ---
 elif phase == "Phase 9 - Digital Footprint Intelligence (DFI) Feedback Loops":
     st.markdown("### 📊 Phase 9 – DFI Feedback Loops")
-    st.markdown("This phase emphasizes measuring your footprint and detecting reemerging exposure.")
-
-    phase9_tasks = [
+    tasks = [
         "Re-scan people search engines monthly",
         "Monitor for re-listed data using Kanary/Optery",
         "Set Google Alerts for full name, phone, and address",
@@ -188,14 +165,10 @@ elif phase == "Phase 9 - Digital Footprint Intelligence (DFI) Feedback Loops":
         "Review browser/device fingerprint results weekly",
         "Audit metadata leakage from installed extensions"
     ]
-
-    for task in phase9_tasks:
-        if st.checkbox(task, key=task):
+    for task in tasks:
+        if st.checkbox(task, key=f"p9_{task}"):
             log_checkbox("Phase 9", task)
             generate_gpt_overlay("Digital Footprint Monitoring", task, instructor=(user_type == "Instructor"))
-   
-    if tactic:
-        generate_gpt_overlay("Cross-Platform Ecosystem", tactic, instructor=(user_type == "Instructor"))
 
 run_ghost_gpt(phase)
 
