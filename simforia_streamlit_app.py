@@ -16,19 +16,7 @@ from openai import OpenAI
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
-def generate_gpt_overlay(broker_name, tactic, instructor=False):
-    system = (
-        "You are Ghost Protocol, a tactical privacy advisor and red cell instructor."
-        if instructor else
-        "You are Ghost Protocol, a privacy AI helping users delete, remove, or obfuscate their data from surveillance systems."
-    )
 
-    prompt = f"How to {tactic.lower()} your data from {broker_name}. Give step-by-step instructions and note any risks, verification needs, or common pitfalls."
-
-    with st.expander(f"🧠 {tactic.title()} Guidance from Ghost Protocol"):
-        response = client.chat.completions.create(
-            model="gpt-4-1106-preview",
-            messages=[
                
 def render_broker_overlay(broker, description, opt_out_url, instructor=False):
     st.markdown(f"### 🛰 {broker}")
