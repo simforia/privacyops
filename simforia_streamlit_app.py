@@ -34,7 +34,6 @@ def generate_gpt_overlay(broker_name, tactic, instructor=False):
         "You are Ghost Protocol, a privacy AI helping users delete, remove, or obfuscate their data from surveillance systems."
     )
 
-
     prompt = f"How to {tactic.lower()} your data from {broker_name}. Give step-by-step instructions and note any risks, verification needs, or common pitfalls."
 
     with st.expander(f"🧠 {tactic.title()} Guidance from Ghost Protocol"):
