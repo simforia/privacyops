@@ -1,5 +1,6 @@
 # 🛡️ Simforia PrivacyOps Suite
 https://simforia-privacyops-ikmyze8gk2zsazsndj3nw2.streamlit.app/
+
 **Ghost Protocol – Tactical Privacy Disappearance Assistant**  
 Developed by Simforia Intelligence Group
 
