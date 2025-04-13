@@ -5,6 +5,12 @@ from ghost_gpt_module import run_ghost_gpt  # GPT module import
 from injector_module import run_instructor_injector
 from amazon_obfuscation_module import render_amazon_obfuscation_section
 from simforia_data_broker_warroom import run_broker_warroom
+from simforia_ops_module import (
+    render_broker_overlay,
+    log_checkbox,
+    trigger_inject_alert,
+    export_log
+)
 
 st.set_page_config(page_title="Simforia PrivacyOps | Ghost Protocol", layout="wide")
 
