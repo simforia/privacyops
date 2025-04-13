@@ -17,9 +17,26 @@ def generate_gpt_overlay(broker_name, tactic, instructor=False):
         "You are Ghost Protocol, a privacy AI helping users delete, remove, or obfuscate their data from surveillance systems."
     )
 
-    prompt = (
-        f"How to {tactic.lower()} your data from {broker_name}. "
-        "Give step-by-step instructions and note any risks, verification needs, or common pitfalls."
+    if tactic.lower() == "both (layered attack)":
+        prompt = (
+            f"You are Ghost Protocol. Execute a layered strategy to erase and obfuscate data from {broker_name}. "
+            f"This includes formal deletion/removal steps and parallel misdirection (false trails, decoy submissions, etc.). "
+            f"Outline both vectors clearly and include risks, timing, and signals of success."
+        )
+    else:
+        prompt = f"How to {tactic.lower()} your data from {broker_name}. Give step-by-step instructions and note any risks, verification needs, or common pitfalls."
+
+    with st.expander(f"🧠 {tactic.title()} Guidance from Ghost Protocol"):
+        response = client.chat.completions.create(
+            model="gpt-4-1106-preview",
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.6,
+            max_tokens=600
+        )
+        st.markdown(response.choices[0].message.content)
     )
 
     with st.expander(f"🧠 {tactic.title()} Guidance from Ghost Protocol"):
