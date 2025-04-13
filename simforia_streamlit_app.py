@@ -67,3 +67,26 @@ elif phase == "Phase 5 - Maintenance":
     st.checkbox("Update Obsidian vault or local logs")
 
 st.info("Instructor mode, API integration, and GPT handoff coming in Phase 2 deployment.")
+
+# --- GPT Chat Interface ---
+st.divider()
+st.subheader("🧠 Ghost Protocol - GPT Privacy Advisor")
+
+user_input = st.text_area("Ask Ghost Protocol for help with any privacy task:")
+
+if st.button("Run GPT Advisor"):
+    if user_input.strip() == "":
+        st.warning("Enter a question or task to proceed.")
+    else:
+        with st.spinner("Ghost Protocol is analyzing..."):
+            response = openai.ChatCompletion.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": f"You are Ghost Protocol, a tactical privacy advisor from Simforia. The user is currently working on {phase}. Help them erase their digital footprint and protect their identity."},
+                    {"role": "user", "content": user_input}
+                ],
+                temperature=0.6,
+                max_tokens=600
+            )
+            st.success("Response from Ghost Protocol:")
+            st.write(response.choices[0].message.content)
