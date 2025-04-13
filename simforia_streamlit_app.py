@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import datetime
 from ghost_gpt_module import run_ghost_gpt  # GPT module import
+from injector_module import run_instructor_injector
 
 st.set_page_config(page_title="Simforia PrivacyOps | Ghost Protocol", layout="wide")
 
@@ -69,3 +70,7 @@ elif phase == "Phase 5 - Maintenance":
 
 # ✅ GPT Advisor module with Obsidian export
 run_ghost_gpt(phase)
+# Instructor-only panel
+if user_type in ["Instructor", "Field Op"]:  # Optional access gating
+    run_instructor_injector()
+
