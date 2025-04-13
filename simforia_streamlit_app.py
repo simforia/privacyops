@@ -36,12 +36,10 @@ phase = st.radio("Which phase are you working on?", [
     "Phase 4 - Cover Identity",
     "Phase 5 - Maintenance",
     "Phase 6 - Deception & Noise Seeding",
-    "Phase 7 - Cross-Platform Identity Decoupling"
-    "Phase 8 - Metadata Cloaking"
+    "Phase 7 - Cross-Platform Identity Decoupling",
+    "Phase 8 - Metadata Cloaking",
     "Phase 9 - Digital Footprint Intelligence (DFI) Feedback Loops"
 ])
-
-
 
 if phase == "Phase 1 - Exposure Audit":
     st.markdown("### 🔍 Exposure Audit Checklist")
