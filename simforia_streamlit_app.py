@@ -53,8 +53,7 @@ elif phase == "Phase 3 - Lockdown Protocols":
     st.checkbox("Install Mullvad VPN")
     st.checkbox("Harden Firefox with uBlock + PrivacyBadger")
     with st.expander("🛒 Amazon Obfuscation Playbook (Click to Expand)", expanded=True):
-    render_amazon_obfuscation_section()
-
+        render_amazon_obfuscation_section()
 
 
 elif phase == "Phase 4 - Cover Identity":
