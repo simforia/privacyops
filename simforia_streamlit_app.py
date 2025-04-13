@@ -25,7 +25,7 @@ st.markdown("Erase the digital you. Control exposure, lock down your footprint, 
 
 with st.sidebar:
     st.header("🧠 Configure Your Identity Profile")
-        user_name = st.text_input("Full Name", placeholder="e.g., Jordan Reeves")
+    user_name = st.text_input("Full Name", placeholder="e.g., Jordan Reeves")
     user_address = st.text_input("Street Address", placeholder="123 Main St, Apt 4B")
     user_city = st.text_input("City", placeholder="e.g., Asheville")
     user_state = st.text_input("State/Province", placeholder="e.g., NC")
