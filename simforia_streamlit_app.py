@@ -54,6 +54,13 @@ with st.sidebar:
     instructor_mode = st.checkbox("🎓 Instructor Mode", value=False)
     st.session_state["is_instructor"] = instructor_mode
 
+st.markdown("---")
+if st.session_state.get("is_instructor") or advanced_mode:
+    st.markdown("🛡️ **Phase BLACK – Active Surveillance Countermeasures (ASC)**")
+    phase_black_trigger = st.checkbox("🔥 Enter Phase BLACK")
+    st.session_state["phase_black_active"] = phase_black_trigger
+
+
 
 if advanced_mode:
     phase = st.radio("Which phase are you working on?", [
@@ -304,6 +311,39 @@ elif phase == "Phase 9 - Digital Footprint Intelligence (DFI) Feedback Loops":
         if st.checkbox(task, key=f"p9_{task}"):
             log_checkbox("Phase 9", task)
             generate_gpt_overlay("Digital Footprint Monitoring", task, instructor=st.session_state["is_instructor"])
+
+# --- PHASE BLACK TRIGGER ---
+if st.session_state.get("phase_black_active"):
+    st.markdown("## 🛡️ PHASE BLACK – Active Surveillance Countermeasures (ASC)")
+    st.error("🚨 This environment is now operating under Phase BLACK protocols. Surveillance indicators detected.")
+
+    with st.expander("🔍 Detection & Validation"):
+        st.markdown("- Behavioral anomalies (phantom notifications, lag, geolocation drift)")
+        st.markdown("- RF anomalies (sudden signal strength shifts)")
+        st.markdown("- Third-party recon indicators (OSINT pings, background checks)")
+
+    with st.expander("🧰 Counter-Surveillance Toolkit"):
+        st.markdown("- RF Detector (T10 Sweeper, Kestrel TSCM)")
+        st.markdown("- IMSI Catcher Detector (Sitch, Crocodile Hunter)")
+        st.markdown("- Power signature analysis")
+        st.markdown("- Offline keyloggers for integrity checking")
+
+    response_action = st.selectbox("🧨 Select Phase BLACK Response Option", [
+        "Compartment Wipe",
+        "OpSec Escalation",
+        "Cover Identity Activation",
+        "AI-Driven Disinfo Bloom"
+    ])
+
+    if response_action:
+        generate_gpt_overlay("Phase BLACK", response_action, instructor=True)
+
+    with st.expander("🧭 Strategic Safeguards"):
+        st.markdown("- Maintain an Escalation Tree (Green ➝ Amber ➝ Red ➝ BLACK)")
+        st.markdown("- Use air-gapped encrypted USB comms kits")
+        st.markdown("- Store continuity backups (wallets, aliases, offline comms)")
+        st.markdown("- Initiate Synthetic Pattern Noise to confuse surveillance analytics")
+
 
 run_ghost_gpt(phase)
 
