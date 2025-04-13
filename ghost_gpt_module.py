@@ -18,7 +18,7 @@ def run_ghost_gpt(phase):
         with st.spinner("Ghost Protocol is analyzing..."):
             try:
                 response = client.chat.completions.create(
-                    model="gpt-4",
+                    model="gpt-3.5-turbo",
                     messages=[
                         {
                             "role": "system",
