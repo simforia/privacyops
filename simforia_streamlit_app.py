@@ -87,8 +87,8 @@ with st.sidebar:
             "Phase 8 – Metadata & Behavioral Cloaking",
             "Phase 9 – Digital Footprint Intelligence (DFI) Feedback Loops",
             "Phase 9.5 – Behavioral Feedback AI Loop",
-            "Optional Phase – DNA & Biometric Spoof Prevention"
-    ])
+    "Optional Phase – DNA & Biometric Spoof Prevention"
+])
 else:
     phase = st.radio("Which phase are you working on?", [
         "Phase 1 – Exposure Audit",
@@ -101,6 +101,7 @@ else:
         "Phase 8 – Metadata & Behavioral Cloaking",
         "Phase 9 – Digital Footprint Intelligence (DFI) Feedback Loops"
     ])
+
 
 if phase == "Phase 1 – Exposure Audit":
     ...
