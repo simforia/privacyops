@@ -66,7 +66,7 @@ with st.sidebar:
     instructor_mode = st.checkbox("🎓 Instructor Mode", value=False)
     st.session_state["is_instructor"] = instructor_mode
     st.markdown("---")
-        if st.session_state.get("is_instructor") or advanced_mode:
+    if st.session_state.get("is_instructor") or advanced_mode:
     st.markdown("🛡️ **Phase BLACK – Active Surveillance Countermeasures (ASC)**")
     phase_black_trigger = st.checkbox("🔥 Enter Phase BLACK")
     st.session_state["phase_black_active"] = phase_black_trigger
@@ -174,6 +174,7 @@ elif phase == "Phase 9.5 – Behavioral Feedback AI Loop":
             ],
             temperature=0.7,
             max_tokens=700
+        )
         st.markdown(response.choices[0].message.content)
 
 elif phase == "Optional Phase – DNA & Biometric Spoof Prevention":
@@ -212,6 +213,7 @@ elif phase == "Phase 2 - Broker Opt-Out":
         description="Aggregates social media and public records data.",
         opt_out_url="https://www.spokeo.com/optout",
         instructor=is_instructor
+    )
 
     run_broker_warroom(is_instructor)
 
@@ -281,7 +283,7 @@ elif phase == "Phase 7 - Cross-Platform Identity Decoupling":
     tactic = st.radio(
         "Select your decoupling strategy:",
         ["Metadata Decoupling", "Account Segmentation", "Full Identity Partitioning"],
-        key="phase7_strategy"
+key="phase7_strategy")
     if tactic:
         log_checkbox("Phase 7", tactic)
     generate_gpt_overlay("Cross-Platform Ecosystem", tactic, instructor=st.session_state["is_instructor"])
