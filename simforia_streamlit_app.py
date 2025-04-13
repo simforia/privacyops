@@ -33,53 +33,47 @@ with st.sidebar:
     user_phone = st.text_input("Phone Number", placeholder="e.g., 555-123-4567")
     user_email = st.text_input("Email Address", placeholder="e.g., jordan@example.com")
     st.session_state["user_identity"] = {
-    "name": user_name,
-    "address": user_address,
-    "city": user_city,
-    "state": user_state,
-    "zip": user_zip,
-    "phone": user_phone,
-    "email": user_email
+        "name": user_name,
+        "address": user_address,
+        "city": user_city,
+        "state": user_state,
+        "zip": user_zip,
+        "phone": user_phone,
+        "email": user_email
     }
     st.header("🧠 User Profile")
     user_type = st.selectbox("Select your role:", ["Civilian", "Journalist", "IC/LEO", "Whistleblower", "Field Op", "Instructor"])
     st.date_input("Session Date", datetime.date.today())
     st.markdown("Customize your erasure mission below:")
-        # 💬 Simforia GPT Conversation Starters (Civilian-Friendly)
+    
+    # 💬 Simforia GPT Conversation Starters (Civilian-Friendly)
     st.markdown("### 💬 Suggested Conversation Starters")
     st.markdown("""
-    - How do I remove my personal data from the internet?  
-    - Can you help me audit my online exposure risk?  
-    - What’s the best way to shield my identity from tracking?  
-    - How do I set up secure communication channels?  
-    - Walk me through a phased digital cleanup plan.  
-    - Show me how to create a compartmented identity.  
-    - How can I detect if I’m being digitally surveilled?  
-    - What tools reduce metadata leakage?  
-    - Build a data broker opt-out checklist.  
-    - Help me train others to do digital cleanup safely.  
+- How do I remove my personal data from the internet?  
+- Can you help me audit my online exposure risk?  
+- What’s the best way to shield my identity from tracking?  
+- How do I set up secure communication channels?  
+- Walk me through a phased digital cleanup plan.  
+- Show me how to create a compartmented identity.  
+- How can I detect if I’m being digitally surveilled?  
+- What tools reduce metadata leakage?  
+- Build a data broker opt-out checklist.  
+- Help me train others to do digital cleanup safely.
     """)
+    
     st.markdown("---")
     st.markdown("🧠 [Access Ghost Protocol GPT](https://chatgpt.com/g/g-67fbb978fa4c8191b8a9c0c1cc13afca-simforia-intelligence-group-ghost-protocol)")
-            # ✅ Add this new option:
-    advanced_mode = st.checkbox("🔬 Enable Advanced Phases", value=False)
-    instructor_mode = st.checkbox("🎓 Instructor Mode", value=False)
+    
+    # ✅ Add new options with unique keys:
+    advanced_mode = st.checkbox("🔬 Enable Advanced Phases", value=False, key="advanced_mode_toggle")
+    instructor_mode = st.checkbox("🎓 Instructor Mode", value=False, key="instructor_mode_toggle")
     st.session_state["is_instructor"] = instructor_mode
+    
     st.markdown("---")
     if st.session_state.get("is_instructor") or advanced_mode:
         st.markdown("🛡️ **Phase BLACK – Active Surveillance Countermeasures (ASC)**")
-        phase_black_trigger = st.checkbox("🔥 Enter Phase BLACK")
+        phase_black_trigger = st.checkbox("🔥 Enter Phase BLACK", key="phase_black_trigger")
         st.session_state["phase_black_active"] = phase_black_trigger
-# ✅ Add this new option:
-advanced_mode = st.checkbox("🔬 Enable Advanced Phases", value=False)
-instructor_mode = st.checkbox("🎓 Instructor Mode", value=False)
-st.session_state["is_instructor"] = instructor_mode
-st.markdown("---")
-
-if st.session_state.get("is_instructor") or advanced_mode:
-    st.markdown("🛡️ **Phase BLACK – Active Surveillance Countermeasures (ASC)**")
-    phase_black_trigger = st.checkbox("🔥 Enter Phase BLACK")
-    st.session_state["phase_black_active"] = phase_black_trigger
 
 if advanced_mode:
     phase = st.radio("Which phase are you working on?", [
@@ -99,7 +93,7 @@ if advanced_mode:
         "Phase 9 – Digital Footprint Intelligence (DFI) Feedback Loops",
         "Phase 9.5 – Behavioral Feedback AI Loop",
         "Optional Phase – DNA & Biometric Spoof Prevention"
-    ])
+    ], key="phase_advanced_radio")
 else:
     phase = st.radio("Which phase are you working on?", [
         "Phase 1 – Exposure Audit",
@@ -111,15 +105,23 @@ else:
         "Phase 7 – Cross-Platform Identity Decoupling",
         "Phase 8 – Metadata & Behavioral Cloaking",
         "Phase 9 – Digital Footprint Intelligence (DFI) Feedback Loops"
-    ])
-    
+    ], key="phase_basic_radio")
 
-
+# --- Phase Handling Below ---
 if phase == "Phase 1 – Exposure Audit":
-    ...
-elif phase == "Phase 0 – Threat Modeling & Persona Calibration":
-    ...
+    st.markdown("### 🔍 Exposure Audit Checklist")
+    tasks = [
+        "Run HaveIBeenPwned breach check",
+        "Perform Google search with `site:` queries",
+        "Generate IntelX report",
+        "Run Optery/Kanary exposure scan"
+    ]
+    for task in tasks:
+        if st.checkbox(task, key=f"p1_{task}"):
+            log_checkbox("Phase 1", task)
+            generate_gpt_overlay("Exposure Audit", task, instructor=st.session_state["is_instructor"])
 
+elif phase == "Phase 0 – Threat Modeling & Persona Calibration":
     st.markdown("### 🧠 Phase 0 – Threat Modeling & Persona Calibration")
     st.radio("Adversary Type", ["Script Kiddie", "Criminal Org", "Corporate", "Nation-State"], key="adversary_type")
     st.radio("Objective", ["Obscurity", "Anonymity", "Untraceability"], key="op_objective")
@@ -137,7 +139,7 @@ elif phase == "Phase 1.5 – Infrastructure & Access Hygiene":
     for task in tasks:
         if st.checkbox(task, key=f"p15_{task}"):
             log_checkbox("Phase 1.5", task)
-    generate_gpt_overlay("Infrastructure Hygiene", task, instructor=st.session_state["is_instructor"])
+            generate_gpt_overlay("Infrastructure Hygiene", task, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 2.5 – Legal & Financial Cloaking":
     st.markdown("### 🛠 Phase 2.5 – Legal & Financial Cloaking")
@@ -151,7 +153,7 @@ elif phase == "Phase 2.5 – Legal & Financial Cloaking":
     for task in tasks:
         if st.checkbox(task, key=f"p25_{task}"):
             log_checkbox("Phase 2.5", task)
-    generate_gpt_overlay("Legal Cloaking", task, instructor=st.session_state["is_instructor"])
+            generate_gpt_overlay("Legal Cloaking", task, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 4.5 – Synthetic Ecosystem & Decoys":
     st.markdown("### 🕸 Phase 4.5 – Synthetic Ecosystem & Decoys")
@@ -164,19 +166,19 @@ elif phase == "Phase 4.5 – Synthetic Ecosystem & Decoys":
     for task in tasks:
         if st.checkbox(task, key=f"p45_{task}"):
             log_checkbox("Phase 4.5", task)
-    generate_gpt_overlay("Synthetic Identity", task, instructor=st.session_state["is_instructor"])
+            generate_gpt_overlay("Synthetic Identity", task, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 5.5 – Burn Network Protocol":
     st.markdown("### 📉 Phase 5.5 – Burn Network Protocol")
     st.warning("⚠️ Initiating this phase means a full identity reset and wiping prior infrastructure.")
-    if st.button("💥 Initiate Burn Protocol"):
+    if st.button("💥 Initiate Burn Protocol", key="burn_protocol"):
         st.session_state["simforia_log"] = []
         st.success("All logs wiped. Begin rebuilding a clean digital identity.")
 
 elif phase == "Phase 9.5 – Behavioral Feedback AI Loop":
     st.markdown("### 🔬 Phase 9.5 – Behavioral Feedback AI Loop")
-    user_input = st.text_area("Describe your recent activities or privacy concern:")
-    if st.button("Run Behavioral Threat Model"):
+    user_input = st.text_area("Describe your recent activities or privacy concern:", key="bf_input")
+    if st.button("Run Behavioral Threat Model", key="bf_button"):
         from openai import OpenAI
         client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
         response = client.chat.completions.create(
@@ -201,42 +203,25 @@ elif phase == "Optional Phase – DNA & Biometric Spoof Prevention":
     for task in tasks:
         if st.checkbox(task, key=f"bio_{task}"):
             log_checkbox("Biometrics", task)
-    generate_gpt_overlay("Biometric Spoofing", task, instructor=st.session_state["is_instructor"])
-
-
-if phase == "Phase 1 - Exposure Audit":
-    st.markdown("### 🔍 Exposure Audit Checklist")
-    tasks = [
-        "Run HaveIBeenPwned breach check",
-        "Perform Google search with `site:` queries",
-        "Generate IntelX report",
-        "Run Optery/Kanary exposure scan"
-    ]
-    for task in tasks:
-        if st.checkbox(task):
-            log_checkbox("Phase 1", task)
-    generate_gpt_overlay("Exposure Audit", task, instructor=st.session_state["is_instructor"])
+            generate_gpt_overlay("Biometric Spoofing", task, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 2 - Broker Opt-Out":
     st.markdown("### 📤 Broker Opt-Out Tracker")
     is_instructor = user_type == "Instructor"
-
     render_broker_overlay(
         broker="Spokeo",
         description="Aggregates social media and public records data.",
         opt_out_url="https://www.spokeo.com/optout",
         instructor=is_instructor
     )
-
     run_broker_warroom(is_instructor)
-
     df = pd.DataFrame({
         'Broker': ['Spokeo', 'Whitepages', 'MyLife', 'BeenVerified'],
         'Opt-Out Submitted': [False]*4,
         'Confirmation Received': [False]*4,
         'Recheck Date': [""]*4
     })
-    edited_df = st.data_editor(df, num_rows="dynamic", use_container_width=True)
+    edited_df = st.data_editor(df, num_rows="dynamic", use_container_width=True, key="broker_editor")
     st.download_button("💾 Download Tracker as CSV", edited_df.to_csv(index=False), "privacy_tracker.csv", "text/csv")
 
 elif phase == "Phase 3 - Lockdown Protocols":
@@ -249,10 +234,9 @@ elif phase == "Phase 3 - Lockdown Protocols":
         "Harden Firefox with uBlock + PrivacyBadger"
     ]
     for task in tasks:
-        if st.checkbox(task):
+        if st.checkbox(task, key=f"p3_{task}"):
             log_checkbox("Phase 3", task)
-    generate_gpt_overlay("Lockdown Protocols", task, instructor=st.session_state["is_instructor"])
-
+            generate_gpt_overlay("Lockdown Protocols", task, instructor=st.session_state["is_instructor"])
     with st.expander("🛒 Amazon Obfuscation Playbook (Click to Expand)", expanded=True):
         render_amazon_obfuscation_section()
 
@@ -262,7 +246,7 @@ elif phase == "Phase 4 - Cover Identity":
         "Alias Name", "Fake DOB", "Region/City", "Decoy Job Title", "Burner Email", "Burner Phone"
     ]
     for field in identity_fields:
-        st.text_input(field)
+        st.text_input(field, key=f"ci_{field}")
     generate_gpt_overlay("Cover Identity", field, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 5 - Maintenance":
@@ -274,9 +258,9 @@ elif phase == "Phase 5 - Maintenance":
         "Update Obsidian vault or local logs"
     ]
     for task in tasks:
-        if st.checkbox(task):
+        if st.checkbox(task, key=f"p5_{task}"):
             log_checkbox("Phase 5", task)
-    generate_gpt_overlay("Maintenance", task, instructor=st.session_state["is_instructor"])
+            generate_gpt_overlay("Maintenance", task, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 6 - Deception & Noise Seeding":
     st.markdown("### 🕵️ Deception & Noise Seeding")
@@ -287,16 +271,17 @@ elif phase == "Phase 6 - Deception & Noise Seeding":
         "Use honeypot accounts and controlled leaks"
     ]
     for task in deception_tactics:
-        if st.checkbox(task):
+        if st.checkbox(task, key=f"p6_{task}"):
             log_checkbox("Phase 6", task)
-    generate_gpt_overlay("Surveillance Economy", task, instructor=st.session_state["is_instructor"])
+            generate_gpt_overlay("Surveillance Economy", task, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 7 - Cross-Platform Identity Decoupling":
     st.markdown("### 🧬 Cross-Platform Identity Decoupling")
     tactic = st.radio(
         "Select your decoupling strategy:",
         ["Metadata Decoupling", "Account Segmentation", "Full Identity Partitioning"],
-key="phase7_strategy")
+        key="phase7_strategy"
+    )
     if tactic:
         log_checkbox("Phase 7", tactic)
     generate_gpt_overlay("Cross-Platform Ecosystem", tactic, instructor=st.session_state["is_instructor"])
@@ -315,7 +300,7 @@ elif phase == "Phase 8 - Metadata & Behavioral Cloaking":
     for task in tasks:
         if st.checkbox(task, key=f"p8_{task}"):
             log_checkbox("Phase 8", task)
-    generate_gpt_overlay("Metadata Cloaking", task, instructor=st.session_state["is_instructor"])
+            generate_gpt_overlay("Metadata Cloaking", task, instructor=st.session_state["is_instructor"])
 
 elif phase == "Phase 9 - Digital Footprint Intelligence (DFI) Feedback Loops":
     st.markdown("### 📊 Phase 9 – DFI Feedback Loops")
@@ -330,40 +315,34 @@ elif phase == "Phase 9 - Digital Footprint Intelligence (DFI) Feedback Loops":
     for task in tasks:
         if st.checkbox(task, key=f"p9_{task}"):
             log_checkbox("Phase 9", task)
-    generate_gpt_overlay("Digital Footprint Monitoring", task, instructor=st.session_state["is_instructor"])
+            generate_gpt_overlay("Digital Footprint Monitoring", task, instructor=st.session_state["is_instructor"])
 
 # --- PHASE BLACK TRIGGER ---
 if st.session_state.get("phase_black_active"):
     st.markdown("## 🛡️ PHASE BLACK – Active Surveillance Countermeasures (ASC)")
     st.error("🚨 This environment is now operating under Phase BLACK protocols. Surveillance indicators detected.")
-
     with st.expander("🔍 Detection & Validation"):
         st.markdown("- Behavioral anomalies (phantom notifications, lag, geolocation drift)")
         st.markdown("- RF anomalies (sudden signal strength shifts)")
         st.markdown("- Third-party recon indicators (OSINT pings, background checks)")
-
     with st.expander("🧰 Counter-Surveillance Toolkit"):
         st.markdown("- RF Detector (T10 Sweeper, Kestrel TSCM)")
         st.markdown("- IMSI Catcher Detector (Sitch, Crocodile Hunter)")
         st.markdown("- Power signature analysis")
         st.markdown("- Offline keyloggers for integrity checking")
-
     response_action = st.selectbox("🧨 Select Phase BLACK Response Option", [
         "Compartment Wipe",
         "OpSec Escalation",
         "Cover Identity Activation",
         "AI-Driven Disinfo Bloom"
-    ])
-
+    ], key="phase_black_response")
     if response_action:
         generate_gpt_overlay("Phase BLACK", response_action, instructor=True)
-
     with st.expander("🧭 Strategic Safeguards"):
         st.markdown("- Maintain an Escalation Tree (Green ➝ Amber ➝ Red ➝ BLACK)")
         st.markdown("- Use air-gapped encrypted USB comms kits")
         st.markdown("- Store continuity backups (wallets, aliases, offline comms)")
         st.markdown("- Initiate Synthetic Pattern Noise to confuse surveillance analytics")
-
 
 run_ghost_gpt(phase)
 
