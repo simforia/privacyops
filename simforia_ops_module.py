@@ -28,7 +28,7 @@ def generate_gpt_overlay(broker_name, tactic, instructor=False):
 
     with st.expander(f"🧠 {tactic.title()} Guidance from Ghost Protocol"):
         response = client.chat.completions.create(
-            model="gpt-4-1106-preview",
+            model="GPT_MODEL = "gpt-4"",
             messages=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": prompt}
