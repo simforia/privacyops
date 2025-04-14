@@ -14,6 +14,9 @@ from simforia_ops_module import (
     generate_gpt_overlay
 )
 
+# --- Config Constants ---
+GPT_MODEL = "gpt-4-turbo"
+
 # Ensure session state is initialized
 if "simforia_log" not in st.session_state:
     st.session_state.simforia_log = []
@@ -180,7 +183,7 @@ if st.button("Run Behavioral Threat Model", key="bf_button"):
     client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
     try:
         response = client.chat.completions.create(
-            model="gpt-4-turbo",  # 🔄 Updated model name
+            model=GPT_MODEL,  # 🔄 Updated model name
             messages=[
                 {"role": "system", "content": "You are Ghost Protocol. Analyze the user's digital behavior and simulate how an adversary might track or correlate their metadata."},
                 {"role": "user", "content": user_input}
