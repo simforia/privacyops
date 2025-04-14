@@ -175,14 +175,12 @@ elif phase == "Phase 5.5 – Burn Network Protocol":
         st.session_state["simforia_log"] = []
         st.success("All logs wiped. Begin rebuilding a clean digital identity.")
 
-elif phase == "Phase 9.5 – Behavioral Feedback AI Loop":
-    st.markdown("### 🔬 Phase 9.5 – Behavioral Feedback AI Loop")
-    user_input = st.text_area("Describe your recent activities or privacy concern:", key="bf_input")
-    if st.button("Run Behavioral Threat Model", key="bf_button"):
-        from openai import OpenAI
-        client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+if st.button("Run Behavioral Threat Model", key="bf_button"):
+    from openai import OpenAI
+    client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+    try:
         response = client.chat.completions.create(
-            model="gpt-4-turbo",
+            model="gpt-4-turbo",  # 🔄 Updated model name
             messages=[
                 {"role": "system", "content": "You are Ghost Protocol. Analyze the user's digital behavior and simulate how an adversary might track or correlate their metadata."},
                 {"role": "user", "content": user_input}
@@ -191,6 +189,9 @@ elif phase == "Phase 9.5 – Behavioral Feedback AI Loop":
             max_tokens=700
         )
         st.markdown(response.choices[0].message.content)
+    except Exception as e:
+        st.error(f"⚠️ GPT interaction failed: {str(e)}")
+
 
 elif phase == "Optional Phase – DNA & Biometric Spoof Prevention":
     st.markdown("### 🧬 DNA & Biometric Spoof Prevention")
