@@ -182,7 +182,7 @@ elif phase == "Phase 9.5 – Behavioral Feedback AI Loop":
         from openai import OpenAI
         client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
         response = client.chat.completions.create(
-            model="gpt-4-1106-preview",
+            model="gpt-4-turbo",
             messages=[
                 {"role": "system", "content": "You are Ghost Protocol. Analyze the user's digital behavior and simulate how an adversary might track or correlate their metadata."},
                 {"role": "user", "content": user_input}
