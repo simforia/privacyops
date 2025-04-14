@@ -43,7 +43,8 @@ def generate_burner_identity():
 # --- End New Features ---
 
 # --- Config Constants ---
-GPT_MODEL = "gpt-4-turbo"
+model="gpt-4",  # Most stable and widely available version"gpt-4",  # Most stable and widely available version
+
 
 # Ensure session state is initialized
 if "simforia_log" not in st.session_state:
@@ -213,7 +214,7 @@ elif phase == "Phase 9.5 – Behavioral Feedback AI Loop":
         from openai import OpenAI
         client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
         response = client.chat.completions.create(
-            model=GPT_MODEL,
+            model="gpt-4",  # Most stable and widely available versionGPT_MODEL,
             messages=[
                 {"role": "system", "content": "You are Ghost Protocol. Analyze the user's digital behavior and simulate how an adversary might track or correlate their metadata."},
                 {"role": "user", "content": user_input}
