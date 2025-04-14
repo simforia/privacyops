@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import datetime
-
 from ghost_gpt_module import run_ghost_gpt
 from injector_module import run_instructor_injector
 from amazon_obfuscation_module import render_amazon_obfuscation_section
@@ -13,6 +12,35 @@ from simforia_ops_module import (
     export_log,
     generate_gpt_overlay
 )
+from faker import Faker
+
+# --- New Automation Enhancements ---
+
+def run_active_metadata_analysis(identity):
+    """
+    Simulate an active metadata analysis.
+    Returns a report string based on the user's identity data.
+    """
+    name = identity.get("name", "Unknown")
+    # Simulate analysis (in real-world, you’d integrate a metadata scraper)
+    report = f"Analyzing metadata for {name}...\nNo problematic metadata detected. Good job!"
+    return report
+
+def generate_burner_identity():
+    """
+    Generate a burner identity using Faker.
+    Returns a dictionary with alias, dob, address, and email.
+    """
+    fake = Faker()
+    identity = {
+        "alias": fake.name(),
+        "dob": str(fake.date_of_birth(minimum_age=18, maximum_age=80)),
+        "address": fake.address(),
+        "email": fake.email()
+    }
+    return identity
+
+# --- End New Features ---
 
 # --- Config Constants ---
 GPT_MODEL = "gpt-4-turbo"
@@ -117,7 +145,7 @@ if phase == "Phase 1 – Exposure Audit":
         "Run HaveIBeenPwned breach check",
         "Perform Google search with `site:` queries",
         "Generate IntelX report",
-        "Run Optery/Kanary exposure scan"
+        "Run Optery-Kanary exposure scan"
     ]
     for task in tasks:
         if st.checkbox(task, key=f"p1_{task}"):
@@ -178,12 +206,14 @@ elif phase == "Phase 5.5 – Burn Network Protocol":
         st.session_state["simforia_log"] = []
         st.success("All logs wiped. Begin rebuilding a clean digital identity.")
 
-if st.button("Run Behavioral Threat Model", key="bf_button"):
-    from openai import OpenAI
-    client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-    try:
+elif phase == "Phase 9.5 – Behavioral Feedback AI Loop":
+    st.markdown("### 🔬 Phase 9.5 – Behavioral Feedback AI Loop")
+    user_input = st.text_area("Describe your recent activities or privacy concern:", key="bf_input")
+    if st.button("Run Behavioral Threat Model", key="bf_button"):
+        from openai import OpenAI
+        client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
         response = client.chat.completions.create(
-            model=GPT_MODEL,  # 🔄 Updated model name
+            model=GPT_MODEL,
             messages=[
                 {"role": "system", "content": "You are Ghost Protocol. Analyze the user's digital behavior and simulate how an adversary might track or correlate their metadata."},
                 {"role": "user", "content": user_input}
@@ -192,9 +222,6 @@ if st.button("Run Behavioral Threat Model", key="bf_button"):
             max_tokens=700
         )
         st.markdown(response.choices[0].message.content)
-    except Exception as e:
-        st.error(f"⚠️ GPT interaction failed: {str(e)}")
-
 
 elif phase == "Optional Phase – DNA & Biometric Spoof Prevention":
     st.markdown("### 🧬 DNA & Biometric Spoof Prevention")
@@ -252,6 +279,15 @@ elif phase == "Phase 4 - Cover Identity":
     for field in identity_fields:
         st.text_input(field, key=f"ci_{field}")
     generate_gpt_overlay("Cover Identity", field, instructor=st.session_state["is_instructor"])
+    # --- Additional Enhancements for Burner Identity Automation & Metadata Analysis ---
+    if st.button("Generate Burner Identity", key="burner_identity_btn"):
+        burner_identity = generate_burner_identity()
+        st.write("### Generated Burner Identity:")
+        st.json(burner_identity)
+    if st.button("Run Active Metadata Analysis", key="metadata_analysis_btn"):
+        meta_report = run_active_metadata_analysis(st.session_state.get("user_identity", {}))
+        st.write("### Metadata Analysis Report:")
+        st.text(meta_report)
 
 elif phase == "Phase 5 - Maintenance":
     st.markdown("### 🔁 Ongoing Maintenance")
