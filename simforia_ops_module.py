@@ -1,9 +1,15 @@
 import streamlit as st
 from openai import OpenAI
+import pandas as pd
+from datetime import datetime
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-GPT_MODEL = "gpt-4"  # ✅ Model fixed and scoped correctly
 
+# === Global log store ===
+if 'simforia_log' not in st.session_state:
+    st.session_state.simforia_log = []
+
+# === Tactical Broker Overlay ===
 def generate_gpt_overlay(broker_name, tactic, instructor=False):
     system = (
         "You are Ghost Protocol, a tactical privacy advisor and red cell instructor."
@@ -22,7 +28,7 @@ def generate_gpt_overlay(broker_name, tactic, instructor=False):
 
     with st.expander(f"🧠 {tactic.title()} Guidance from Ghost Protocol"):
         response = client.chat.completions.create(
-            model=GPT_MODEL,
+            model="GPT_MODEL = "gpt-4"",
             messages=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": prompt}
@@ -43,28 +49,40 @@ def render_broker_overlay(broker, description, opt_out_url, instructor=False):
         key=broker
     )
 
-    if tactic:
-        generate_gpt_overlay(broker, tactic, instructor)
-
-def log_checkbox(phase, task_name):
-    if "simforia_log" not in st.session_state:
-        st.session_state.simforia_log = []
-
+    # Log selection
     st.session_state.simforia_log.append({
-        "Phase": phase,
-        "Task": task_name,
-        "Timestamp": datetime.datetime.now().isoformat()
+        "timestamp": str(datetime.utcnow()),
+        "broker": broker,
+        "tactic": tactic,
+        "action_type": "broker_tactic"
     })
 
-def trigger_inject_alert(message):
-    st.warning(f"🚨 Inject Triggered: {message}")
+    generate_gpt_overlay(broker, tactic, instructor)
 
+# === Checkbox Logger ===
+def log_checkbox(phase, action_desc):
+    st.session_state.simforia_log.append({
+        "timestamp": str(datetime.utcnow()),
+        "phase": phase,
+        "action": action_desc,
+        "action_type": "checkbox"
+    })
+
+# === Inject Challenge Simulator ===
+def trigger_inject_alert(broker="Whitepages", level="critical"):
+    st.warning(f"⚠️ Inject Alert: {broker} has relisted your profile. Reactivate your broker kill chain.")
+
+    st.session_state.simforia_log.append({
+        "timestamp": str(datetime.utcnow()),
+        "inject": f"{broker} relisted warning",
+        "severity": level,
+        "action_type": "inject"
+    })
+
+# === Export Session Log ===
 def export_log():
-    if st.button("📥 Export Simforia Log"):
+    if st.session_state.simforia_log:
         df = pd.DataFrame(st.session_state.simforia_log)
-        st.download_button(
-            "Download Log as CSV",
-            df.to_csv(index=False),
-            file_name="simforia_privacy_log.csv",
-            mime="text/csv"
-        )
+        st.download_button("💾 Download Session Log", df.to_csv(index=False), "simforia_log.csv", "text/csv")
+    else:
+        st.info("No activity logged yet.")
