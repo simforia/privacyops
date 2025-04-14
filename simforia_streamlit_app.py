@@ -22,7 +22,7 @@ def run_active_metadata_analysis(identity):
     Returns a report string based on the user's identity data.
     """
     name = identity.get("name", "Unknown")
-    # Simulate analysis (in real-world, you’d integrate a metadata scraper)
+    # Simulate analysis (in real-world, you'd integrate a metadata scraper)
     report = f"Analyzing metadata for {name}...\nNo problematic metadata detected. Good job!"
     return report
 
@@ -43,8 +43,7 @@ def generate_burner_identity():
 # --- End New Features ---
 
 # --- Config Constants ---
-model="gpt-4",  # Most stable and widely available version"gpt-4",  # Most stable and widely available version
-
+GPT_MODEL = "gpt-4"  # <-- replaced "gpt-4-turbo" with "gpt-4"
 
 # Ensure session state is initialized
 if "simforia_log" not in st.session_state:
@@ -73,6 +72,7 @@ with st.sidebar:
         "phone": user_phone,
         "email": user_email
     }
+
     st.header("🧠 User Profile")
     user_type = st.selectbox("Select your role:", ["Civilian", "Journalist", "IC/LEO", "Whistleblower", "Field Op", "Instructor"])
     st.date_input("Session Date", datetime.date.today())
@@ -92,7 +92,7 @@ with st.sidebar:
 - Build a data broker opt-out checklist.  
 - Help me train others to do digital cleanup safely.
     """)
-    
+
     st.markdown("---")
     st.markdown("🧠 [Access Ghost Protocol GPT](https://chatgpt.com/g/g-67fbb978fa4c8191b8a9c0c1cc13afca-simforia-intelligence-group-ghost-protocol)")
     
@@ -214,7 +214,7 @@ elif phase == "Phase 9.5 – Behavioral Feedback AI Loop":
         from openai import OpenAI
         client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
         response = client.chat.completions.create(
-            model="gpt-4",  # Most stable and widely available versionGPT_MODEL,
+            model=GPT_MODEL,
             messages=[
                 {"role": "system", "content": "You are Ghost Protocol. Analyze the user's digital behavior and simulate how an adversary might track or correlate their metadata."},
                 {"role": "user", "content": user_input}
@@ -280,11 +280,13 @@ elif phase == "Phase 4 - Cover Identity":
     for field in identity_fields:
         st.text_input(field, key=f"ci_{field}")
     generate_gpt_overlay("Cover Identity", field, instructor=st.session_state["is_instructor"])
+
     # --- Additional Enhancements for Burner Identity Automation & Metadata Analysis ---
     if st.button("Generate Burner Identity", key="burner_identity_btn"):
         burner_identity = generate_burner_identity()
         st.write("### Generated Burner Identity:")
         st.json(burner_identity)
+
     if st.button("Run Active Metadata Analysis", key="metadata_analysis_btn"):
         meta_report = run_active_metadata_analysis(st.session_state.get("user_identity", {}))
         st.write("### Metadata Analysis Report:")
