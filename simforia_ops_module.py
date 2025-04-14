@@ -4,6 +4,7 @@ import pandas as pd
 from datetime import datetime
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+GPT_MODEL = "gpt-4"  # ✅ Defined cleanly
 
 # === Global log store ===
 if 'simforia_log' not in st.session_state:
@@ -28,7 +29,7 @@ def generate_gpt_overlay(broker_name, tactic, instructor=False):
 
     with st.expander(f"🧠 {tactic.title()} Guidance from Ghost Protocol"):
         response = client.chat.completions.create(
-            model="GPT_MODEL = "gpt-4"",
+            model=GPT_MODEL,
             messages=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": prompt}
@@ -38,6 +39,7 @@ def generate_gpt_overlay(broker_name, tactic, instructor=False):
         )
         st.markdown(response.choices[0].message.content)
 
+# === Broker Interface ===
 def render_broker_overlay(broker, description, opt_out_url, instructor=False):
     st.markdown(f"### 🛰 {broker}")
     st.markdown(f"**Profile:** {description}")
@@ -49,7 +51,6 @@ def render_broker_overlay(broker, description, opt_out_url, instructor=False):
         key=broker
     )
 
-    # Log selection
     st.session_state.simforia_log.append({
         "timestamp": str(datetime.utcnow()),
         "broker": broker,
